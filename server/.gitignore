@@ -6,6 +6,7 @@
 /.pnp
 .pnp.js
 /.env
+/pacakage.json
 /package.lock.json
 
 #rest client file for api testing
