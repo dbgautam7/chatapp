@@ -7,6 +7,10 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 
+const userRouters=require("../src/routes/userRouters")
+
+app.use(userRouters)
+
 const io = new Server(server,{
   cors: {
       origin: "*"
@@ -18,15 +22,13 @@ const io = new Server(server,{
 const connect=require("./db/connect")
 connect()
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const port = 3003;
+server.listen(port, () => {
+    console.log(`Server running on port at ${port}`);
+});
 
 io.on('connection', (socket) => {
   console.log("socket is connected")
-});
-
-server.listen(port, hostname, () => {
-    console.log(`Server running on port at http://${hostname}:${port}/`);
 });
 
 
