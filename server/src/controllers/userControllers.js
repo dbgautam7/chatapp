@@ -1,14 +1,14 @@
 const Users = require('../models/Users')
 const bcrypt = require('bcrypt');
 
-const Register = async (req, res) => {
-    const hash = await bcrypt.hashSync(req.body.password, 10);
+const Register = async(req, res) => {
     try {
-        Users.findOne({$and: [{email: req.body.email}, {phone:req.body.phone}]})
+        Users.findOne({phoneOrEmail: req.body.phoneOrEmail})
         .then((user) => {
             if (!user) {
                 const hash = bcrypt.hashSync(req.body.password, 10);
                 req.body.password = hash
+                console.log(req.body,"##")
                 Users.create(req.body)
                     .then((userData) => {
                         console.log(userData,"@@")

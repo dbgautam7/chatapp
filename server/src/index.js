@@ -17,12 +17,12 @@ const io = new Server(server,{
   },
 });
 
-
-
 const connect=require("./db/connect")
 connect()
 
-const port = 3003;
+require('dotenv').config()
+const port=process.env.PORT
+
 server.listen(port, () => {
     console.log(`Server running on port at ${port}`);
 });

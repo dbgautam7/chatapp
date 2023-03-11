@@ -1,11 +1,11 @@
 import './App.css'
 import React, {Component} from 'react'
-import Register from './containers/register'
+import RoutesHandler from './components/routesHandler'
 
 class App extends Component {
   render() {
     return <div className="App">
-      <Register />
+      <RoutesHandler />
     </div>
   }
 }
