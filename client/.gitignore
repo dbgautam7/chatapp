@@ -1,4 +1,12 @@
 /coverage
 /dist
+
+# dependencies
 /node_modules
+/.pnp
+.pnp.js
+
 npm-debug.log*
+
+# ignore package-lock.json
+package-lock.json

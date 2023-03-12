@@ -3,8 +3,12 @@ import './register.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+  const navigate=useNavigate()
+
   const RegisterSchema = Yup.object().shape({
     name: Yup.string()
         .max(50, 'Must be 50 characters or less')
@@ -42,6 +46,7 @@ const Register = () => {
       const data = await response.json();
       if (data.success) {
         message.success('You are registered successfully', 3);
+        navigate("/home")
         resetForm({ values: "" });
       } else {
         message.warning('Email or Phone already exists', 3);
@@ -89,7 +94,7 @@ const Register = () => {
           <ErrorMessage name="gender" component="div" className="error-message" />
         </div>
         <button type="submit">Register</button>
-        <div className="already-have-account">Already have an account?</div>
+        <div className="already-have-account"><Link to='/login' style={{textDecoration:"none"}}>Already have an account?</Link></div>
       </div>
     </Form>
   )}
