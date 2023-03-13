@@ -44,9 +44,9 @@ const Register = () => {
         requestOptions
       );
       const data = await response.json();
-      if (data.success) {
+      if (data) {
         message.success('You are registered successfully', 3);
-        navigate("/home")
+        navigate("/home",{ replace: true })
         resetForm({ values: "" });
       } else {
         message.warning('Email or Phone already exists', 3);

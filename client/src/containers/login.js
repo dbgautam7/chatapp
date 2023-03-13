@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 const Login = () => {
 
@@ -41,7 +42,7 @@ const Login = () => {
           const data = await res.json()
           if (data) {
             message.success(data.msg, [2])
-            navigate("/home")
+            navigate("/home",{ replace: true })
           } else {
             message.error(data.errorMsg, [2],)
           }
