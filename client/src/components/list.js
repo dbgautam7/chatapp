@@ -1,10 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react'
 import io from 'socket.io-client';
-
 const socket = io("http://localhost:3003");
+import { useSelector, useDispatch } from 'react-redux';
 
 const List = ({userList}) => {
+
+  const { phoneOrEmail} = useSelector(state => state.user)
+  console.log(phoneOrEmail,"phoneOrEmail")
 
     useEffect(() => {
         socket.on('connection');

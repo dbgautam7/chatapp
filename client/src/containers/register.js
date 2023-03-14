@@ -4,9 +4,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import { setUserDetails } from "../redux-toolkit/userSlice"
+import { useDispatch } from "react-redux";
 
 const Register = () => {
 
+  const dispatch=useDispatch()
   const navigate=useNavigate()
 
   const RegisterSchema = Yup.object().shape({
@@ -46,6 +49,7 @@ const Register = () => {
       const data = await response.json();
       if (data) {
         message.success('You are registered successfully', 3);
+        dispatch(setUserDetails(data.userDetails))
         navigate("/home",{ replace: true })
         resetForm({ values: "" });
       } else {

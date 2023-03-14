@@ -4,9 +4,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { message } from 'antd';
+import { setUserDetails } from "../redux-toolkit/userSlice"
+import { useDispatch } from "react-redux";
 
 const Login = () => {
 
+  const dispatch=useDispatch()
   const [showPassword, setShowPassword] = useState(false)
 
   const handleTogglePassword = () => {
@@ -42,6 +45,7 @@ const Login = () => {
           const data = await res.json()
           if (data) {
             message.success(data.msg, [2])
+            dispatch(setUserDetails(data.userDetails))
             navigate("/home",{ replace: true })
           } else {
             message.error(data.errorMsg, [2],)

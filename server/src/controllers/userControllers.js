@@ -3,7 +3,7 @@ const Users = require("../models/Users");
 const GetUsers = async (req, res) => {
     try {
         const data = await Users.find()
-        console.log(data,"data")
+        // console.log(data,"data")
         if (data) {
             res.status(200).json({
                 userList:data,

@@ -11,9 +11,11 @@ const Register = async(req, res) => {
                 console.log(req.body,"##")
                 Users.create(req.body)
                     .then((userData) => {
-                        console.log(userData,"@@")
+                        const {password,__v, ...refactoredData }=userData.toObject()
+                        // console.log(userData,"++",refactoredData,"@@")
                         if (userData) {
                             res.json({
+                                userDetails:refactoredData,
                                 msg: "Your account is successfully Added"
                             });
                         } else {
