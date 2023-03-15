@@ -8,8 +8,10 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 
 const userRouters=require("../src/routes/userRouters")
+const messageRouters=require("../src/routes/messageRouters")
 
 app.use(userRouters)
+app.use(messageRouters)
 
 const io = new Server(server,{
   cors: {
