@@ -3,7 +3,6 @@ const Messages=require("../models/Messages")
 const PostMessages = async (req, res) => {
   try {
     const data = await Messages.create(req.body);
-    console.log(data, "data");
     res.status(200).json({ message: 'Message created successfully.' });
   } catch (error) {
     console.log(error);
@@ -17,10 +16,10 @@ const GetMessagesById = async (req, res) => {
 
   try {
     const messages = await Messages.find({
-      userId: userId,
-      conversationId: conversationId
+      members: { $all: [userId, conversationId] }
     });
 
+    // console.log(messages,"**")
     res.json({
       messagesList: messages
     });
