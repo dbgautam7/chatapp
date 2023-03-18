@@ -60,7 +60,7 @@ const Home = () => {
 
   useEffect(() => {
     socket.on('messageRequest', (messageRequest) => {
-      setMessagesList(messageRequest)
+      setMessagesList([messageRequest])
       fetchMessagesById()
     });
   }, []);
@@ -73,7 +73,6 @@ const Home = () => {
         members: [_id, selectedUserDetails._id],
       };
       socket.emit("messageRequest", messageRequest);
-  
       try {
         const requestOptions = {
           method: "POST",

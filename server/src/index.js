@@ -20,6 +20,7 @@ const io = new Server(server,{
 });
 
 const connect=require("./db/connect")
+const Messages = require('./models/Messages')
 connect()
 
 require('dotenv').config()
@@ -32,28 +33,13 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
   console.log("socket is connected")
 
+  socket.on("messageRequest", async(messageRequest) => {
+     io.emit("messageRequest", messageRequest);
+  });
+
+
   socket.on('disconnect', () => {
     console.log("socket is disconnected");
   });
 });
 
-
-// let interval;
-
-// io.on("connection", (socket) => {
-//   console.log("New client connected");
-//   if (interval) {
-//     clearInterval(interval);
-//   }
-//   interval = setInterval(() => getApiAndEmit(socket), 1000);
-//   socket.on("disconnect", () => {
-//     console.log("Client disconnected");
-//     clearInterval(interval);
-//   });
-// });
-
-// const getApiAndEmit = socket => {
-//   const response = new Date();
-//   // Emitting a new message. Will be consumed by the client
-//   socket.emit("FromAPI", response);
-// };

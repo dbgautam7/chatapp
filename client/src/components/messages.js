@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const Messages = (props) => {
-
+    
     const [showInputField, setShowInputField] = useState(false)
 
 useEffect(() => {
@@ -19,7 +19,8 @@ useEffect(() => {
         <div className="col-lg-8 col-md-12">
           <h1>{props.selectedUserDetails.name}</h1>
           <div className="p-3" style={{ backgroundColor: '#f5f5f5', minHeight: '200px' }}>
-            {props.messagesList.map((item, index) => {
+            {props.messagesList && 
+            props?.messagesList.map((item, index) => {
               const isSentByMe = item.senderId === props._id;
               const messageContainerStyle = {
                 display: 'inline-block',

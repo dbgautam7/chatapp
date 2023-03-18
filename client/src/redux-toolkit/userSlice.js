@@ -20,8 +20,7 @@ const userSlice = createSlice({
             state.gender = gender || "";
             state._id = _id || "";
         },
-        setLogoutUser:(state, action) => {
-            // state.action = action.payload;
+        setLogoutUser:(state) => {
             state.name =  "";
             state.phoneOrEmail =  "";
             state.gender =  "";
