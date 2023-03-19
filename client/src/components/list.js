@@ -16,6 +16,7 @@ const List = ({userList,_id,fetchMessagesById,setSelectedUserDetails}) => {
                   }}
                 >
                   <span>{item.name}</span>
+                  <span>{item.phoneOrEmail}</span>
                   <i className="bi bi-chevron-right"></i>
                 </li>
               </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import img from "../images/srijan.png";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal } from 'react-bootstrap';
 import Loading from './loading';
@@ -21,7 +20,7 @@ const Messages = (props) => {
 
   return (
     <>
-      {showInputField ? (
+     {showInputField && (
         <Modal show={showModal} onHide={() => setShowModal(false)} >
           <Modal.Header closeButton >
             <Modal.Title className="text-center">{props.selectedUserDetails.name}</Modal.Title>
@@ -65,11 +64,8 @@ const Messages = (props) => {
             </div>
           </Modal.Footer>
         </Modal>
-      ) : (
-        <div className="col-lg-8 col-md-12 d-flex align-items-center justify-content-center">
-          <h3 className="text-center text-primary">Select a user to start chatting</h3>
-        </div>
       )}
+
     </>
   );
 };

@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 const socket = io("http://localhost:3003");
 import Logout from '../components/logout';
 import Messages from '../components/messages';
+import Profile from './profile';
 
 const Home = () => {
 
@@ -13,10 +14,10 @@ const Home = () => {
   const [userList, setUserList] = useState([])
   const [messagesList, setMessagesList] = useState([])
   const [selectedUserDetails, setSelectedUserDetails] = useState({})
-  const [page,setPage]=useState(1)
-  const [loading,setLoading]=useState(true)
-  const limit=10
- 
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const limit = 10
+
 
   const GetAllUserLists = async (values) => {
     const requestOptions = {
@@ -61,31 +62,31 @@ const Home = () => {
     fetchMessagesById(page)
   }, [selectedUserDetails._id, _id])
 
-  const handleInfiteScroll=async()=>{
+  const handleInfiteScroll = async () => {
     console.log("scrollHeight", document.documentElement.scrollHeight)
-    try{
-      if(window.innerHeight+document.documentElement.scrollTop+1 >= document.documentElement.scrollHeight){
-        setPage((prev)=>prev+1)
+    try {
+      if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
+        setPage((prev) => prev + 1)
         setLoading(true)
       }
     }
-    catch(err){
+    catch (err) {
       alert(err)
     }
   }
 
-  useEffect(()=>{
-    window.addEventListener("scroll",handleInfiteScroll)
-    return ()=>removeEventListener("scroll",handleInfiteScroll)
-  },[])
+  useEffect(() => {
+    window.addEventListener("scroll", handleInfiteScroll)
+    return () => removeEventListener("scroll", handleInfiteScroll)
+  }, [])
 
   useEffect(() => {
     socket.on('messageRequest', (messageRequest) => {
-      setMessagesList([...messagesList,messageRequest])
+      setMessagesList([...messagesList, messageRequest])
       fetchMessagesById()
     });
   }, []);
-  
+
   const handleChange = async (e) => {
     e.preventDefault(); // prevent default form submission behavior
     if (e.key === "Enter") {
@@ -114,25 +115,34 @@ const Home = () => {
 
   return (
     <>
-  <div className="container-fluid">
-    <div className="row">
-      <div className="col-lg-4 col-md-12 mb-5 ml-md-5 order-last order-md-first">
-        <div className="user-list bg-light p-3 max-vh-100">
-          <h3 className="text-center mb-4">
-            <small className="text-muted">Let's get connected to each other</small>
-          </h3>
-          <List userList={userList} _id={_id} fetchMessagesById={fetchMessagesById} 
-          setSelectedUserDetails={setSelectedUserDetails} />
-          <Logout />
+      <div className="container-fluid">
+  <h3 className="text-center mb-4">
+    <small className="text-muted">Let's get connected to each other</small>
+  </h3>
+  <div className="row h-100 w-100">
+    <div className="col-md-8 col-lg-6 mb-5 order-last order-lg-first">
+      <div className="user-list bg-light p-3 h-100">
+        <List userList={userList} _id={_id} fetchMessagesById={fetchMessagesById} setSelectedUserDetails={setSelectedUserDetails} />
+        <div>
+          <h3 className="text-center text-primary">Select a user to start chatting</h3>
         </div>
       </div>
-      <div className="col-lg-8 col-md-12">
-        <Messages messagesList={messagesList} selectedUserDetails={selectedUserDetails} 
-          handleChange={handleChange} _id={_id} loading={loading} style={{maxHeight:"100vh"}} />
+    </div>
+    <div className="col-md-4 col-lg-4 order-first order-lg-last">
+      <div className="mb-4">
+        <Profile />
       </div>
     </div>
   </div>
-</>
+</div>
+
+
+      <div className="col-lg-8 col-md-12">
+        <Messages messagesList={messagesList} selectedUserDetails={selectedUserDetails}
+          handleChange={handleChange} _id={_id} loading={loading} style={{ maxHeight: "100vh" }} />
+      </div>
+
+    </>
 
   )
 }
