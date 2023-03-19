@@ -13,6 +13,9 @@ const Home = () => {
   const [userList, setUserList] = useState([])
   const [messagesList, setMessagesList] = useState([])
   const [selectedUserDetails, setSelectedUserDetails] = useState({})
+  const [page,setPage]=useState(1)
+  const [loading,setLoading]=useState(true)
+  const limit=10
  
 
   const GetAllUserLists = async (values) => {
@@ -44,10 +47,10 @@ const Home = () => {
       body: JSON.stringify()
     }
     try {
-      const res = await fetch(`http://localhost:3003/messages/${selectedUserDetails._id}/${_id}`, requestOptions);
+      const res = await fetch(`http://localhost:3003/messages/${selectedUserDetails._id}/${_id}?limit=${limit}&page=${page}`, requestOptions);
       const data = await res.json()
-      console.log(data, "data")
       setMessagesList(data.messagesList)
+      setLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -55,24 +58,42 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetchMessagesById()
+    fetchMessagesById(page)
   }, [selectedUserDetails._id, _id])
+
+  const handleInfiteScroll=async()=>{
+    console.log("scrollHeight", document.documentElement.scrollHeight)
+    try{
+      if(window.innerHeight+document.documentElement.scrollTop+1 >= document.documentElement.scrollHeight){
+        setPage((prev)=>prev+1)
+        setLoading(true)
+      }
+    }
+    catch(err){
+      alert(err)
+    }
+  }
+
+  useEffect(()=>{
+    window.addEventListener("scroll",handleInfiteScroll)
+    return ()=>removeEventListener("scroll",handleInfiteScroll)
+  },[])
 
   useEffect(() => {
     socket.on('messageRequest', (messageRequest) => {
-      setMessagesList([messageRequest])
+      setMessagesList([...messagesList,messageRequest])
       fetchMessagesById()
     });
   }, []);
   
   const handleChange = async (e) => {
+    e.preventDefault(); // prevent default form submission behavior
     if (e.key === "Enter") {
       const messageRequest = {
         senderId: _id,
         message: e.target.value,
         members: [_id, selectedUserDetails._id],
       };
-      socket.emit("messageRequest", messageRequest);
       try {
         const requestOptions = {
           method: "POST",
@@ -82,6 +103,7 @@ const Home = () => {
         const res = await fetch(`http://localhost:3003/messages`, requestOptions);
         const data = await res.json();
         setMessagesList([...messagesList, data.message]);
+        socket.emit("messageRequest", messagesList);
         fetchMessagesById()
       } catch (error) {
         console.log(error);
@@ -106,7 +128,7 @@ const Home = () => {
       </div>
       <div className="col-lg-8 col-md-12">
         <Messages messagesList={messagesList} selectedUserDetails={selectedUserDetails} 
-          handleChange={handleChange} _id={_id} />
+          handleChange={handleChange} _id={_id} loading={loading} style={{maxHeight:"100vh"}} />
       </div>
     </div>
   </div>

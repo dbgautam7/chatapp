@@ -20,7 +20,6 @@ const io = new Server(server,{
 });
 
 const connect=require("./db/connect")
-const Messages = require('./models/Messages')
 connect()
 
 require('dotenv').config()
@@ -34,12 +33,20 @@ io.on('connection', (socket) => {
   console.log("socket is connected")
 
   socket.on("messageRequest", async(messageRequest) => {
-     io.emit("messageRequest", messageRequest);
+    try {
+      io.emit("messageRequest", messageRequest);
+    } catch (error) {
+      console.log(error);
+    }
   });
-
 
   socket.on('disconnect', () => {
     console.log("socket is disconnected");
   });
+
+  socket.on('error', (error) => {
+    console.log("socket error:", error);
+  });
 });
+
 
