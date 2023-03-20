@@ -5,6 +5,7 @@ export const initialState = {
     phoneOrEmail: "",
     gender: "",
     _id: "",
+    photo:"",
     isLoading: false,
     error: ""
 };
@@ -14,17 +15,19 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUserDetails: (state, action) => {
-            const { name, phoneOrEmail, gender, _id } = action.payload || {};
+            const { name, phoneOrEmail, gender, _id,photo } = action.payload || {};
             state.name = name || "";
             state.phoneOrEmail = phoneOrEmail || "";
             state.gender = gender || "";
             state._id = _id || "";
+            state.photo=photo || "";
         },
         setLogoutUser:(state) => {
             state.name =  "";
             state.phoneOrEmail =  "";
             state.gender =  "";
             state._id =  "";
+            state.photo="";
         }
     }
 });

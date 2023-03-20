@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import List from '../components/list'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 const socket = io("http://localhost:3003");
-import Logout from '../components/logout';
+import UserList from '../components/userList';
 import Messages from '../components/messages';
 import Profile from './profile';
 
 const Home = () => {
 
-  const { _id, name } = useSelector(state => state.user)
+  const { _id } = useSelector(state => state.user)
   const [userList, setUserList] = useState([])
   const [messagesList, setMessagesList] = useState([])
   const [selectedUserDetails, setSelectedUserDetails] = useState({})
@@ -122,7 +121,7 @@ const Home = () => {
   <div className="row h-100 w-100">
     <div className="col-md-8 col-lg-6 mb-5 order-last order-lg-first">
       <div className="user-list bg-light p-3 h-100">
-        <List userList={userList} _id={_id} fetchMessagesById={fetchMessagesById} setSelectedUserDetails={setSelectedUserDetails} />
+        <UserList userList={userList} _id={_id} fetchMessagesById={fetchMessagesById} setSelectedUserDetails={setSelectedUserDetails} />
         <div>
           <h3 className="text-center text-primary">Select a user to start chatting</h3>
         </div>

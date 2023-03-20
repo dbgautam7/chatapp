@@ -43,7 +43,7 @@ const Login = () => {
           }
           const res = await fetch(`http://localhost:3003/login`, requestOptions);
           const data = await res.json()
-          if (data) {
+          if (data.isLoggedIn) {
             message.success(data.msg, [2])
             dispatch(setUserDetails(data.userDetails))
             navigate("/home",{ replace: true })

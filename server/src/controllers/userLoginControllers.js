@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 const Login=async (req, res) => {
     try {
         const user = await Users.findOne({ phoneOrEmail: req.body.phoneOrEmail }).lean();
-        // console.log(user,"&&")
+        console.log(user,"&&")
         if (user) {
           const {password, __v, ...refactoredData} = user
           const isMatched = bcrypt.compareSync(req.body.password, password);
@@ -13,6 +13,7 @@ const Login=async (req, res) => {
           if (isMatched) {
             res.status(200).json({
               userDetails:refactoredData,
+              isLoggedIn:true,
               msg: "Logged in successfully",
             });
           } else {

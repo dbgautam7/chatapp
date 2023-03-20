@@ -3,7 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import Home from '../containers/home';
 import Login from '../containers/login';
 import Register from '../containers/register';
-import Messages from './messages';
+import Messages from '../components/messages';
+import ProfilePicChange from '../components/profilePicChange';
 
 const RoutesHandler = () => {
   return (
@@ -13,6 +14,7 @@ const RoutesHandler = () => {
     <Route path='/login' element={<Login />} />
     <Route path='/home' element={<Home />} />
     <Route path='/messages' element={<Messages />} />
+    <Route path='/home/profilePictureChange' element={<ProfilePicChange />} />
 </Routes>
     </div>
   )

@@ -1,7 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react'
 
-const List = ({userList,_id,fetchMessagesById,setSelectedUserDetails}) => {
+
+const UserList = ({userList,_id,fetchMessagesById,setSelectedUserDetails}) => {
   return (
     <>
       <ol className="list-group list-group-numbered bg-white">
@@ -27,4 +28,4 @@ const List = ({userList,_id,fetchMessagesById,setSelectedUserDetails}) => {
   )
 }
 
-export default List
+export default UserList

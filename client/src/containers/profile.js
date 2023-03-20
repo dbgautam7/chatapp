@@ -1,38 +1,24 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Logout from '../components/logout'
-import noProfileImg from '../images/noProfileImg.jpg'
+import blankPicture from '../images/blankPicture.png'
 
 const Profile = () => {
-
-    const { _id, name } = useSelector(state => state.user)
-    const [photo,setPhoto]=useState(null)
-
-    const handleSubmit = async () => {
-        const formdata = new FormData();
-        formdata.append("avatar", photo);
-        formdata.append("_id", _id);
-        const res = await fetch(`http://localhost:3003/profilePicChange`, {
-          method: "POST",
-          body: formdata,
-        });
-        const data = await res.json();
-        if (data) {
-          console.log(data)
-        }
-        else{
-            const error=new Error()
-            console.log(error)
-        }
-      };
-
+    const { name,photo } = useSelector(state => state.user)
+    console.log("photo",photo)
 
   return (
-    <div className="card w-50 my-3 p-3">
-  <img src={noProfileImg} className="card-img-top" alt="Image" />
+    <div className="card w-80 my-3 p-3">
+      {photo ?(
+      <img src={require(`../images/${photo}`)} alt="Loading.." />
+      ):
+     (
+  <img src={blankPicture} className="card-img-top" alt="Image" />
+     )
+      }
   <div className="card-body">
-    <input type="file" onChange={(e)=>setPhoto(e.target.files[0])} />
-  <button type="button" className="btn btn-outline-primary" onClick={()=>handleSubmit()}>Change Profile Picture</button>
+    <Link className="btn btn-primary" to='/home/profilePictureChange'>Change Profile Picture</Link>
     <h5 className="card-title">{name}</h5>
     <Logout />
   </div>
