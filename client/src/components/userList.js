@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react'
+import blankPicture from '../images/blankPicture.png'
 
 
-const UserList = ({userList,_id,fetchMessagesById,setSelectedUserDetails}) => {
+const UserList = ({ userList, _id, fetchMessagesById, setSelectedUserDetails }) => {
   return (
     <>
       <ol className="list-group list-group-numbered bg-white">
@@ -18,6 +19,18 @@ const UserList = ({userList,_id,fetchMessagesById,setSelectedUserDetails}) => {
                 >
                   <span>{item.name}</span>
                   <span>{item.phoneOrEmail}</span>
+                  {item.photo === ""? (
+                     <img src={blankPicture} className="card-img-top" alt="Image"
+                     style={{ width: "80px", height: "80px", border:"1px solid black", borderRadius:"50%" }} />
+                   
+                  ):(
+                    <img
+                      src={require(`../images/${item.photo}`).default}
+                      alt="Loading.."
+                      style={{ width: "80px", height: "80px", border:"1px solid black", borderRadius:"50%" }}
+                    />
+                  )
+                }
                   <i className="bi bi-chevron-right"></i>
                 </li>
               </div>

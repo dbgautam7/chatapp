@@ -5,6 +5,7 @@ const PostProfile = async(req, res) => {
     console.log(req.file)
     const data = await Users.findByIdAndUpdate(req.body._id, { photo: req.file.filename }).lean()
     if (data) {
+      console.log(data,"data")
       res.status(200).json({
         userProfilePic:data,
         msg: "Image Uploaded Successfully"

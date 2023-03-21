@@ -22,7 +22,7 @@ const ProfilePicChange = () => {
         });
         const data = await res.json();
         if (data) {
-            console.log(data)
+            console.log(data,"data")
             dispatch(setUserDetails(data.userProfilePic))
             navigate('/home')
         }

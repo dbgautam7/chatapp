@@ -6,7 +6,7 @@ const usersSchema = new mongoose.Schema(
     phoneOrEmail: {type: String, required: true, maxLength: 50},
     password: { type: String, required:true },
     gender:{type:String, enum: ['male', 'female', 'other']},
-    photo:{type:String}
+    photo:{type:String, default:""}
   },
   { collection: "users" }
 );

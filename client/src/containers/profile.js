@@ -10,8 +10,8 @@ const Profile = () => {
 
   return (
     <div className="card w-80 my-3 p-3">
-      {photo ?(
-      <img src={require(`../images/${photo}`)} alt="Loading.." />
+      {photo!=="" ?(
+      <img src={require(`../images/${photo}`).default} alt="Loading.." />
       ):
      (
   <img src={blankPicture} className="card-img-top" alt="Image" />
