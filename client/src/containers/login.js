@@ -45,6 +45,7 @@ const Login = () => {
           const data = await res.json()
           if (data.isLoggedIn) {
             message.success(data.msg, [2])
+            sessionStorage.setItem('userDetails', JSON.stringify(data.userDetails));
             dispatch(setUserDetails(data.userDetails))
             navigate("/home",{ replace: true })
           } else {

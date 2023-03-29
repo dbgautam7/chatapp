@@ -49,6 +49,7 @@ const Register = () => {
       const data = await response.json();
       if (data) {
         message.success('You are registered successfully', 3);
+        sessionStorage.setItem('userDetails', JSON.stringify(data.userDetails));
         dispatch(setUserDetails(data.userDetails))
         navigate("/home",{ replace: true })
         resetForm({ values: "" });
